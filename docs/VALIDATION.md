@@ -1,4 +1,20 @@
-# Kiểm chứng Lịch âm 1.0
+# Kiểm chứng Lịch âm
+
+## Bản 1.1.0
+
+- **18 kiểm thử logic lịch** vẫn đạt, gồm 73.414 ngày trong dải 1900–2100.
+- **13 kiểm thử giao diện**: 10 kịch bản lịch đầy đủ và 3 kịch bản widget (bố cục 360×480, nền trang trong suốt, đồng bộ nền/khóa giữa hai cửa sổ, khôi phục sau reload, đổi ngày UTC+7).
+- **2 kiểm thử Rust**: khôi phục tùy chọn cũ bằng giá trị mặc định và kiểm tra đầy đủ biên cửa sổ với màn hình có tọa độ âm.
+- Build Rust/Tauri release x64 và NSIS thành công.
+- Kiểm thử tích hợp file exe thật qua WebView2: `--autostart` giữ cửa sổ lớn ẩn, widget hiện; nền 100% trong suốt nhưng chữ opacity 1; khóa vị trí, ẩn/hiện, thêm/xóa đăng ký khởi động, đường dẫn exe có quote, chống chạy trùng, nhớ tùy chọn và khôi phục vị trí qua lần mở lại.
+- Cài vào thư mục riêng có dấu cách và chạy lại toàn bộ kiểm thử native; mã thoát cài/gỡ đều 0. Gỡ cài đặt xóa file ứng dụng và đăng ký tự khởi động.
+- Trang tải qua kiểm tra desktop 1280 px/mobile 390 px, không tràn ngang, không lỗi console/CSP và link tải sinh đúng theo phiên bản.
+
+Luồng tự khởi động được kiểm chứng bằng đăng ký Windows và tham số `--autostart`; không đăng xuất hay khởi động lại máy của người dùng. Widget vẫn là cửa sổ không viền, không nhúng vào lớp hình nền và không bảo đảm luôn hiện sau Win+D.
+
+Kiểm thử native có thể chạy lại bằng `node scripts/check-native.mjs` khi không có phiên bản Lịch âm khác đang mở. Script chỉ mở cổng debug WebView2 localhost trong tiến trình kiểm thử, khôi phục tùy chọn và tắt tự khởi động sau kiểm tra. Cổng debug không được bật trong ứng dụng thông thường.
+
+## Các kiểm chứng từ bản 1.0
 
 ## Logic lịch
 

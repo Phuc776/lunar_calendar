@@ -1,0 +1,7 @@
+{
+  "$schema": "../gen/schemas/desktop-schema.json",
+  "identifier": "widget-drag",
+  "description": "Cho phép kéo cửa sổ widget bằng vùng tiêu đề chính thức của Tauri",
+  "windows": ["widget"],
+  "permissions": ["core:window:allow-start-dragging"]
+}

@@ -2,6 +2,6 @@
   "$schema": "../gen/schemas/desktop-schema.json",
   "identifier": "main-capability",
   "description": "Lưu tùy chọn giao diện trên máy",
-  "windows": ["main"],
+  "windows": ["main", "widget"],
   "permissions": ["core:default", "store:default"]
 }

@@ -1,7 +1,9 @@
 import { useEffect, useMemo, useRef, useState, type KeyboardEvent, type ReactNode } from 'react';
 import { ArrowDownUp, ArrowRight, CalendarDays, Check, ChevronDown, ChevronLeft, ChevronRight, CircleHelp, Moon, Search, Settings2, Sun, Sunrise, X } from 'lucide-react';
 import { addDays, dateKey, holidays, lunarMonths, lunarText, MAX_YEAR, MIN_YEAR, monthGrid, sameDate, shiftMonth, solarText, stamp, supported, todayInVietnam, toLunar, toSolar, upcomingHolidays, validSolar, weekday, type CivilDate } from './calendar';
-import { readTheme, writeTheme, type Theme } from './preferences';
+import { readTheme, writeTheme, watchTheme, type Theme } from './preferences';
+import DesktopSettings from './DesktopSettings';
+import { onOpenSettings } from './desktop';
 
 type DialogName = 'lookup' | 'settings' | 'month' | null;
 
@@ -104,7 +106,7 @@ export default function App() {
   const [today, setToday] = useState(todayInVietnam);
   const [selected, setSelected] = useState<CivilDate>(() => supported(todayInVietnam()) ? todayInVietnam() : { day: 1, month: 1, year: MIN_YEAR });
   const [view, setView] = useState(() => ({ year: selected.year, month: selected.month }));
-  const [dialog, setDialog] = useState<DialogName>(null);
+  const [dialog, setDialog] = useState<DialogName>(() => new URLSearchParams(location.search).get('settings') === '1' ? 'settings' : null);
   const [theme, setTheme] = useState<Theme>('system');
   const [preferenceError, setPreferenceError] = useState('');
   const [ready, setReady] = useState(false);
@@ -116,6 +118,14 @@ export default function App() {
   const cells = useMemo(() => monthGrid(view.year, view.month).map(date => ({ date, lunar: toLunar(date), events: holidays(date) })), [view]);
   const events = holidays(selected, selectedLunar);
   const upcoming = useMemo(() => supported(today) ? upcomingHolidays(today) : [], [today]);
+
+  useEffect(() => {
+    let alive = true; const subscriptions: (() => void)[] = [];
+    const retain = (unsubscribe: () => void) => { if (alive) subscriptions.push(unsubscribe); else unsubscribe(); };
+    void onOpenSettings(() => setDialog('settings')).then(retain).catch(() => {});
+    void watchTheme(value => { if (alive) setTheme(value); }).then(retain).catch(() => {});
+    return () => { alive = false; subscriptions.forEach(unsubscribe => unsubscribe()); };
+  }, []);
 
   useEffect(() => {
     let active = true;
@@ -228,7 +238,8 @@ export default function App() {
     {dialog === 'settings' && <Modal title="Cài đặt" subtitle="Một chút tùy chỉnh cho lịch của bạn." onClose={() => setDialog(null)}>
       <p className="field-caption">Giao diện</p><div className="theme-options">{([{ value: 'light', name: 'Sáng', icon: Sun }, { value: 'dark', name: 'Tối', icon: Moon }, { value: 'system', name: 'Hệ thống', icon: Settings2 }] as const).map(item => <button key={item.value} disabled={!ready} aria-pressed={theme === item.value} className={theme === item.value ? 'active' : ''} onClick={() => chooseTheme(item.value)}><item.icon size={23} strokeWidth={1.5} /><span>{item.name}</span>{theme === item.value && <Check className="theme-check" size={13} />}</button>)}</div>
       {preferenceError && <p className="error-message" role="alert">{preferenceError}</p>}
-      <div className="settings-info"><div><span>Lịch sử dụng</span><strong>Âm lịch Việt Nam</strong></div><div><span>Múi giờ</span><strong>UTC+7 · Việt Nam</strong></div><div><span>Ngày dương hỗ trợ</span><strong>1900–2100</strong></div><div><span>Phiên bản</span><strong>1.0.0</strong></div></div>
+      <DesktopSettings />
+      <div className="settings-info"><div><span>Lịch sử dụng</span><strong>Âm lịch Việt Nam</strong></div><div><span>Múi giờ</span><strong>UTC+7 · Việt Nam</strong></div><div><span>Ngày dương hỗ trợ</span><strong>1900–2100</strong></div><div><span>Phiên bản</span><strong>1.1.0</strong></div></div>
       <p className="settings-note">Lịch được tính trên máy và dùng được khi ngoại tuyến. Tùy chọn giao diện được lưu trên thiết bị này.</p>
       <p className="modal-footnote">Mẹo: Ctrl+K để tra cứu. Dùng phím mũi tên để di chuyển trong lịch.</p>
     </Modal>}

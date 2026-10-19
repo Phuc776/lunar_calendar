@@ -1,9 +1,13 @@
 node_modules/
 dist/
-release/
+release/*
+!release/README.md
+src-tauri/gen/schemas/
 src-tauri/target/
 playwright-report/
 test-results/
 *.log
 *.tsbuildinfo
 .DS_Store
+.vercel/
+site-dist/

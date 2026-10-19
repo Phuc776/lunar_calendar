@@ -1,7 +1,7 @@
 {
   "$schema": "https://schema.tauri.app/config/2",
   "productName": "Lịch âm",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "identifier": "vn.licham.desktop",
   "build": {
     "beforeDevCommand": "npm run dev",
@@ -19,7 +19,22 @@
       "minHeight": 540,
       "resizable": true,
       "center": true,
+      "visible": false,
       "backgroundColor": "#f7f5f0"
+    }, {
+      "label": "widget",
+      "title": "Lịch âm · Widget",
+      "width": 360,
+      "height": 480,
+      "resizable": false,
+      "visible": false,
+      "focus": false,
+      "decorations": false,
+      "transparent": true,
+      "noRedirectionBitmap": true,
+      "backgroundColor": "#00000000",
+      "shadow": false,
+      "skipTaskbar": true
     }],
     "security": {
       "csp": "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; connect-src ipc: http://ipc.localhost; font-src 'self' data:"
@@ -33,7 +48,7 @@
     "icon": ["icons/icon.ico", "icons/32x32.png", "icons/128x128.png"],
     "windows": {
       "webviewInstallMode": { "type": "downloadBootstrapper", "silent": true },
-      "nsis": { "installMode": "currentUser", "displayLanguageSelector": false, "languages": ["Vietnamese"] }
+      "nsis": { "installMode": "currentUser", "displayLanguageSelector": false, "languages": ["Vietnamese"], "installerHooks": "windows/installer-hooks.nsh" }
     }
   }
 }

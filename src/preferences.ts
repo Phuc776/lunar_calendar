@@ -17,3 +17,10 @@ export async function writeTheme(theme: Theme): Promise<void> {
     await data.save();
   } else localStorage.setItem(KEY, theme);
 }
+
+export async function watchTheme(callback: (theme: Theme) => void): Promise<() => void> {
+  if (store) return (await store).onKeyChange<Theme>('theme', value => callback(valid(value) ? value : 'system'));
+  const changed = () => { void readTheme().then(callback); };
+  window.addEventListener('storage', changed);
+  return () => window.removeEventListener('storage', changed);
+}
