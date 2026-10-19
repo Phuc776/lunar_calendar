@@ -2,7 +2,7 @@
 
 Ứng dụng lịch âm Việt Nam cho **Windows 10/11 x64**. Xem ngày âm, tra cứu âm–dương, dùng ngoại tuyến và đặt một widget trong suốt ngay trên desktop.
 
-**Phiên bản hiện tại: 1.1.0** · [Tải bản Windows](https://github.com/Phuc776/lunar_calendar/releases/latest) · [Có gì mới](CHANGELOG.md)
+**Phiên bản hiện tại: 1.1.0** · [Trang tải ứng dụng](https://lich-am-ecru.vercel.app/) · [Tải bản Windows](https://github.com/Phuc776/lunar_calendar/releases/latest) · [Có gì mới](CHANGELOG.md)
 
 ## Tải và mở ứng dụng
 

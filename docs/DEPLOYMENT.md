@@ -1,5 +1,13 @@
 # Trang tải miễn phí trên Vercel
 
+
+## Website đang hoạt động
+
+- URL: https://lich-am-ecru.vercel.app/
+- Project: lich-am trong workspace doxphuc-9059's projects, gói Hobby.
+- Bản đầu được triển khai bằng **Drop to Deploy** từ thư mục site-dist đã build. Chưa liên kết GitHub nên push repo chưa tự cập nhật website.
+- Cập nhật tiếp bằng Vercel CLI đã đăng nhập, hoặc liên kết repo rồi dùng cấu hình build bên dưới.
+
 ## Kiến trúc
 
 - **Vercel Hobby:** HTML/CSS/JS tĩnh để giới thiệu và tải Lịch âm. Không có backend, database, Vercel Blob, analytics hoặc font trả phí.
