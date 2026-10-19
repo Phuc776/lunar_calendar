@@ -1,0 +1,39 @@
+{
+  "$schema": "https://schema.tauri.app/config/2",
+  "productName": "Lịch âm",
+  "version": "1.0.0",
+  "identifier": "vn.licham.desktop",
+  "build": {
+    "beforeDevCommand": "npm run dev",
+    "devUrl": "http://127.0.0.1:1420",
+    "beforeBuildCommand": "npm run build",
+    "frontendDist": "../dist"
+  },
+  "app": {
+    "windows": [{
+      "label": "main",
+      "title": "Lịch âm",
+      "width": 460,
+      "height": 640,
+      "minWidth": 360,
+      "minHeight": 540,
+      "resizable": true,
+      "center": true,
+      "backgroundColor": "#f7f5f0"
+    }],
+    "security": {
+      "csp": "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; connect-src ipc: http://ipc.localhost; font-src 'self' data:"
+    }
+  },
+  "bundle": {
+    "active": true,
+    "targets": ["nsis"],
+    "shortDescription": "Lịch âm Việt Nam",
+    "category": "Utility",
+    "icon": ["icons/icon.ico", "icons/32x32.png", "icons/128x128.png"],
+    "windows": {
+      "webviewInstallMode": { "type": "downloadBootstrapper", "silent": true },
+      "nsis": { "installMode": "currentUser", "displayLanguageSelector": false, "languages": ["Vietnamese"] }
+    }
+  }
+}
